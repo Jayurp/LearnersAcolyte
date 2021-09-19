@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePage">
+
+    <ImageButton
+        android:id="@+id/scheduler"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="184dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/todo" />
+
+    <ImageButton
+        android:id="@+id/typed_notes"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="184dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/scheduler"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/written_notes" />
+
+    <ImageButton
+        android:id="@+id/scanner"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="100dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduler"
+        app:srcCompat="@drawable/scanner" />
+
+    <ImageButton
+        android:id="@+id/enotes"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="100dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/scanner"
+        app:layout_constraintTop_toBottomOf="@+id/typed_notes"
+        app:srcCompat="@drawable/enotes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">Learner\'s Acolyte</string>
+
+    <string-array name="dept_names">
+        <item>Department</item>
+        <item>Computer
+        </item>
+    </string-array>
+
+    <string-array name="default_subject">
+        <item>Subject</item>
+    </string-array>
+
+    <string-array name="sem_names">
+        <item>Semester</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="first_sem_sub">
+        <item>Subject</item>
+        <item>Computer Programming</item>
+        <item>Maths</item>
+        <item>Fundamental of Digital Electronics</item>
+        <item>English</item>
+        <item>Environment Conservation and Hazard Management</item>
+    </string-array>
+
+    <string-array name="second_sem_sub">
+        <item>Subject</item>
+        <item>Advanced Computer Programming</item>
+        <item>Maths 2</item>
+        <item>Basic Electronics</item>
+        <item>Physics</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="third_sem_sub">
+        <item>Subject</item>
+        <item>C++</item>
+        <item>Database Management System</item>
+        <item>Data Structures</item>
+        <item>Operating System</item>
+        <item>Microprocessor and Assembly Language Programming </item>
+    </string-array>
+
+    <string-array name="fourth_sem_sub">
+        <item>Subject</item>
+        <item>Advance Database Management System</item>
+        <item>Computer Networks</item>
+        <item>Fundamental of Software Development</item>
+        <item>.NET</item>
+        <item>Computer Organization and Architecture</item>
+    </string-array>
+
+    <string-array name="fifth_sem_sub">
+        <item>Subject</item>
+        <item>Java</item>
+        <item>Computer Networks and Security</item>
+        <item>Computer Maintenance and Troubleshooting</item>
+        <item>Dynamic Web Page Development</item>
+    </string-array>
+
+    <string-array name="sixth_sem_sub">
+        <item>Subject</item>
+        <item>Advance Java</item>
+        <item>AWT</item>
+        <item>DWSA</item>
+        <item>MCAD</item>
+        <item>NMA</item>
+
+    </string-array>
+
+    <string-array name="fifth_sample">
+        <item>Sample Item</item>
+    </string-array>
+</resources>
