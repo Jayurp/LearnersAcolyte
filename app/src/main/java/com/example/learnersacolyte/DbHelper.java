@@ -23,7 +23,7 @@ public class DbHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String create_table = "create table "+table_name+" ("+col_name+" string NOT NULL,"+col_enr+" integer NOT NULL,"+col_sem+" integer NOT NULL,"+col_dept+" string NOT NULL,"+col_institute+" string NOT NULL);";
+        String create_table = "create table "+table_name+" ("+col_name+" string ,"+col_enr+" integer ,"+col_sem+" integer ,"+col_dept+" string ,"+col_institute+" string );";
         db.execSQL(create_table);
     }
 

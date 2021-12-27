@@ -10,12 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnersAcolyte">
         <activity
+            android:name=".AddEventActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Calender"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".Enotes"
             android:exported="true"
-            android:parentActivityName=".HomePage"/>
+            android:parentActivityName=".HomePage" />
         <activity
             android:name=".HomePage"
             android:exported="true" />
