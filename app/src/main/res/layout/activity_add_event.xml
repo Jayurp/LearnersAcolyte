@@ -61,12 +61,13 @@
 
     <EditText
         android:id="@+id/EventDis"
-        android:layout_width="269dp"
-        android:layout_height="185dp"
+        android:layout_width="283dp"
+        android:layout_height="190dp"
+        android:background="@drawable/multilineedittext"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:background="@drawable/multilineedittext"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
