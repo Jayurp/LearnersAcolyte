@@ -1,18 +1,31 @@
 package com.example.learnersacolyte;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class AddEventActivity extends AppCompatActivity {
 
     NumberPicker HourPicker, MinPicker, AmPm;
     String[] AP,minute;
-    TextView ShowTime;
-    String hour, showmin, mergestring, amorpm;
+    String showhour, showmin, amorpm, day, monthC, yearC;
+    Button submit_btn, cancel_btn;
+    EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +35,19 @@ public class AddEventActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Event");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        day = intent.getStringExtra("day_value");
+        monthC = intent.getStringExtra("month_value");
+        yearC = intent.getStringExtra("year_value");
+
         HourPicker = findViewById(R.id.HourPIcker);
         MinPicker = findViewById(R.id.MinPicker);
         AmPm = findViewById(R.id.AmPm);
         AP = getResources().getStringArray(R.array.AP);
         minute = getResources().getStringArray(R.array.minute);
+        submit_btn = findViewById(R.id.submit_btn);
+        cancel_btn = findViewById(R.id.cancel_btn);
+        description = findViewById(R.id.EventDes);
 
         HourPicker.setMaxValue(12);
         HourPicker.setMinValue(1);
@@ -40,7 +61,7 @@ public class AddEventActivity extends AppCompatActivity {
         HourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                hour = Integer.toString(newVal);
+                showhour = Integer.toString(newVal);
             }
         });
 
@@ -54,11 +75,51 @@ public class AddEventActivity extends AppCompatActivity {
         AmPm.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                if(oldVal == 1)
-                    amorpm = "PM";
+                if(newVal == 1)
+                    amorpm = "am";
                 else
-                    amorpm = "AM";
+                    amorpm = "pm";
+
             }
         });
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StoreData();
+            }
+        });
+
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Back();
+            }
+        });
+
+
+    }
+
+    private void StoreData()
+    {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
+        String GoogleID = acct.getId();
+        HashMap<String, Object> obj = new HashMap<String, Object>();
+        obj.put("Hour", showhour);
+        obj.put("Minute", showmin);
+        obj.put("AM or PM", amorpm);
+        obj.put("Day",day);
+        obj.put("Month", monthC);
+        obj.put("Year", yearC);
+        obj.put("Event", description.getText().toString());
+        FirebaseDatabase.getInstance().getReference().child(GoogleID).push().setValue(obj);
+        Toast.makeText(AddEventActivity.this, "Event Added", Toast.LENGTH_SHORT).show();
+        Back();
+    }
+
+    private void Back()
+    {
+        Intent intent = new Intent(AddEventActivity.this, Calender.class);
+        startActivity(intent);
     }
 }
