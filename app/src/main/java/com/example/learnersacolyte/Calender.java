@@ -18,6 +18,9 @@ public class Calender extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender);
 
+        getSupportActionBar().setTitle("Calender");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
         AddEvent = findViewById(R.id.addevent);
 
         AddEvent.setOnClickListener(new View.OnClickListener() {

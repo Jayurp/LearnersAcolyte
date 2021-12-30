@@ -10,11 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnersAcolyte">
         <activity
-            android:name=".AddEventActivity"
+            android:name=".GoogleLogin"
             android:exported="true" />
         <activity
+            android:name=".AddEventActivity"
+            android:exported="true"
+            android:parentActivityName=".Calender" />
+        <activity
             android:name=".Calender"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HomePage" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

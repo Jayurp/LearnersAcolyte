@@ -19,6 +19,9 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        getSupportActionBar().setTitle("Add Event");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
         HourPicker = findViewById(R.id.HourPIcker);
         MinPicker = findViewById(R.id.MinPicker);
         AmPm = findViewById(R.id.AmPm);
