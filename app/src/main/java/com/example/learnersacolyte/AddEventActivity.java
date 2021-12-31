@@ -15,7 +15,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -96,7 +99,7 @@ public class AddEventActivity extends AppCompatActivity {
                 Back();
             }
         });
-
+        fetchdata();
 
     }
 
@@ -107,7 +110,7 @@ public class AddEventActivity extends AppCompatActivity {
         HashMap<String, Object> obj = new HashMap<String, Object>();
         obj.put("Hour", showhour);
         obj.put("Minute", showmin);
-        obj.put("AM or PM", amorpm);
+        obj.put("AMorPM", amorpm);
         obj.put("Day",day);
         obj.put("Month", monthC);
         obj.put("Year", yearC);
@@ -121,5 +124,28 @@ public class AddEventActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(AddEventActivity.this, Calender.class);
         startActivity(intent);
+    }
+
+    private void fetchdata()
+    {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
+        String GoogleID = acct.getId();
+        FirebaseDatabase.getInstance().getReference().child(GoogleID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    for (DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
