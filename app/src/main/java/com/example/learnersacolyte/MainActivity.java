@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 int enr_value = Integer.parseInt(denr);
                 int sem_value = Integer.parseInt(dsem);
 
-                myDb.insertUserDetails(dname,enr_value,sem_value,ddept,dinst);
+                //myDb.insertUserDetails(dname,enr_value,sem_value,ddept,dinst);
                 start();
             }
         });

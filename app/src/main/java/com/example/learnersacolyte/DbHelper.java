@@ -5,15 +5,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 public class DbHelper extends SQLiteOpenHelper
 {
+
+    AddEventActivity obj = new AddEventActivity();
     public static final String db_name = "MyDatabase";
+    /*
     public String table_name = "Registration";
     public String col_name = "name";
     public String col_enr = "enr";
     public String col_sem = "sem";
     public String col_dept = "dept";
-    public String col_institute = "institute";
+    public String col_institute = "institute"; */
+
+    public String ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event";
+    public String table_name = obj.GoogleIDforDB;
 
     public DbHelper(Context context)
     {
@@ -23,7 +32,9 @@ public class DbHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String create_table = "create table "+table_name+" ("+col_name+" string ,"+col_enr+" integer ,"+col_sem+" integer ,"+col_dept+" string ,"+col_institute+" string );";
+        //String create_table = "create table "+table_name+" ("+col_name+" string ,"+col_enr+" integer ,"+col_sem+" integer ,"+col_dept+" string ,"+col_institute+" string );";
+
+        String create_table = "create table "+table_name+"("+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
         db.execSQL(create_table);
     }
 
@@ -33,6 +44,7 @@ public class DbHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
+    /*
     public void insertUserDetails(String dname, int denr,int dsem, String ddept, String dinst)
     {
         //Get the Data Repository in write mode
@@ -47,5 +59,19 @@ public class DbHelper extends SQLiteOpenHelper
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(table_name,null, cValues);
         db.close();
+    }
+        */
+
+    public void insertFireBaseDataInSQ(String date, String month, String year, String minute, String hour, String ampm, String event)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cValues = new ContentValues();
+        cValues.put(ColDate, date);
+        cValues.put(ColMonth, month);
+        cValues.put(ColYear, year);
+        cValues.put(ColMin, minute);
+        cValues.put(ColHour, hour);
+        cValues.put(AmPm, ampm);
+        cValues.put(ColEvent, event);
     }
 }

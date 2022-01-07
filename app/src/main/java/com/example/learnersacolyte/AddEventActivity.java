@@ -24,11 +24,17 @@ import java.util.HashMap;
 
 public class AddEventActivity extends AppCompatActivity {
 
+
+    DbHelper db = new DbHelper(this);
+    FetchFromFIrebase fb =  new FetchFromFIrebase();
     NumberPicker HourPicker, MinPicker, AmPm;
     String[] AP,minute;
     String showhour, showmin, amorpm, day, monthC, yearC;
     Button submit_btn, cancel_btn;
     EditText description;
+    String GoogleIDforDB;
+    String allround = fb.getEvent();
+    TextView ttt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,11 @@ public class AddEventActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Add Event");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        ttt =  findViewById(R.id.txt123);
 
         Intent intent = getIntent();
+        GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
+        GoogleIDforDB = acc.getId();
         day = intent.getStringExtra("day_value");
         monthC = intent.getStringExtra("month_value");
         yearC = intent.getStringExtra("year_value");
@@ -138,6 +147,8 @@ public class AddEventActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot1:snapshot.getChildren())
                     {
                         FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
+                        ttt.setText(f1.getEvent());
+                        db.insertFireBaseDataInSQ(f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getDay(), f1.getEvent());
                     }
                 }
             }
