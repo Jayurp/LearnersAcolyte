@@ -34,7 +34,6 @@ public class AddEventActivity extends AppCompatActivity {
     EditText description;
     String GoogleIDforDB;
     String allround = fb.getEvent();
-    TextView ttt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,6 @@ public class AddEventActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Add Event");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        ttt =  findViewById(R.id.txt123);
 
         Intent intent = getIntent();
         GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
@@ -147,7 +145,6 @@ public class AddEventActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot1:snapshot.getChildren())
                     {
                         FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
-                        ttt.setText(f1.getEvent());
                         db.insertFireBaseDataInSQ(f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getDay(), f1.getEvent());
                     }
                 }
