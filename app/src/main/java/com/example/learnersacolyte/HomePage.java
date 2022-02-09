@@ -22,6 +22,7 @@ public class HomePage extends AppCompatActivity {
     ImageButton enotes;
     ImageButton calender;
     GoogleSignInClient mGoogleSignInClient;
+    DbHelper db = new DbHelper(HomePage.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(HomePage.this, "Signed out", Toast.LENGTH_SHORT).show();
+                        db.DeleteTable();
                         GotoLogin();
                     }
                 });

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,15 +26,13 @@ import java.util.HashMap;
 public class AddEventActivity extends AppCompatActivity {
 
 
-    DbHelper db = new DbHelper(this);
-    FetchFromFIrebase fb =  new FetchFromFIrebase();
+    //DbHelper db = new DbHelper(AddEventActivity.this);
     NumberPicker HourPicker, MinPicker, AmPm;
     String[] AP,minute;
     String showhour, showmin, amorpm, day, monthC, yearC;
     Button submit_btn, cancel_btn;
     EditText description;
     String GoogleIDforDB;
-    String allround = fb.getEvent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +105,6 @@ public class AddEventActivity extends AppCompatActivity {
                 Back();
             }
         });
-        fetchdata();
 
     }
 
@@ -133,27 +131,4 @@ public class AddEventActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void fetchdata()
-    {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
-        String GoogleID = acct.getId();
-        FirebaseDatabase.getInstance().getReference().child(GoogleID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    for (DataSnapshot snapshot1:snapshot.getChildren())
-                    {
-                        FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
-                        db.insertFireBaseDataInSQ(f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getDay(), f1.getEvent());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

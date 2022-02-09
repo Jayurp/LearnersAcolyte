@@ -22,7 +22,7 @@ public class DbHelper extends SQLiteOpenHelper
     public String col_institute = "institute"; */
 
     public String ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event";
-    public String table_name = obj.GoogleIDforDB;
+    public String table_name = "User_DB";
 
     public DbHelper(Context context)
     {
@@ -34,8 +34,7 @@ public class DbHelper extends SQLiteOpenHelper
     {
         //String create_table = "create table "+table_name+" ("+col_name+" string ,"+col_enr+" integer ,"+col_sem+" integer ,"+col_dept+" string ,"+col_institute+" string );";
 
-        String create_table = "create table "+table_name+"("+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
-        db.execSQL(create_table);
+
     }
 
     @Override
@@ -65,6 +64,9 @@ public class DbHelper extends SQLiteOpenHelper
     public void insertFireBaseDataInSQ(String date, String month, String year, String minute, String hour, String ampm, String event)
     {
         SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db2 =  this.getReadableDatabase();
+        String create_table = "create table if not exists "+table_name+"("+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
+        db.execSQL(create_table);
         ContentValues cValues = new ContentValues();
         cValues.put(ColDate, date);
         cValues.put(ColMonth, month);
@@ -73,5 +75,13 @@ public class DbHelper extends SQLiteOpenHelper
         cValues.put(ColHour, hour);
         cValues.put(AmPm, ampm);
         cValues.put(ColEvent, event);
+        long newRowId = db.insert(table_name,null, cValues);
+        db.close();
+    }
+
+    public void DeleteTable()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("drop table "+table_name+";");
     }
 }
