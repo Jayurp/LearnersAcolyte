@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "838076738645",
+    "project_id": "learner-s-acolyte",
+    "storage_bucket": "learner-s-acolyte.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838076738645:android:dfe5eabcc073c3664b78dc",
+        "android_client_info": {
+          "package_name": "com.example.learnersacolyte"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838076738645-nmgnu2r3f5fh3lpc5udo7ifttpmd9o5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8scF2HFyseJSUHL5uZKfZFKh6mGbWF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838076738645-nmgnu2r3f5fh3lpc5udo7ifttpmd9o5v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
