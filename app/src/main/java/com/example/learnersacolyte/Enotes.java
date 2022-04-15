@@ -31,8 +31,6 @@ public class Enotes extends AppCompatActivity {
         subject_spinner = findViewById(R.id.subject_spinner);
         NotesList = findViewById(R.id.NotesList);
 
-        getSupportActionBar().setTitle("Enotes");
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         ArrayAdapter<CharSequence> dept_adpter = ArrayAdapter.createFromResource(this, R.array.dept_names, android.R.layout.simple_spinner_item);
         dept_adpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

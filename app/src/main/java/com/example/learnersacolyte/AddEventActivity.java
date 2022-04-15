@@ -29,9 +29,9 @@ public class AddEventActivity extends AppCompatActivity {
     //DbHelper db = new DbHelper(AddEventActivity.this);
     NumberPicker HourPicker, MinPicker, AmPm;
     String[] AP,minute;
-    String showhour, showmin, amorpm, day, monthC, yearC;
+    String showhour = "1", showmin = "0", amorpm = "am", day, monthC, yearC;
     Button submit_btn, cancel_btn;
-    EditText description;
+    EditText description, title;
     String GoogleIDforDB;
 
     @Override
@@ -39,8 +39,7 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-        getSupportActionBar().setTitle("Add Event");
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
 
         Intent intent = getIntent();
         GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
@@ -57,6 +56,7 @@ public class AddEventActivity extends AppCompatActivity {
         submit_btn = findViewById(R.id.submit_btn);
         cancel_btn = findViewById(R.id.cancel_btn);
         description = findViewById(R.id.EventDes);
+        title = findViewById(R.id.Title);
 
         HourPicker.setMaxValue(12);
         HourPicker.setMinValue(1);
@@ -120,6 +120,7 @@ public class AddEventActivity extends AppCompatActivity {
         obj.put("Month", monthC);
         obj.put("Year", yearC);
         obj.put("Event", description.getText().toString());
+        obj.put("Title", title.getText().toString());
         FirebaseDatabase.getInstance().getReference().child(GoogleID).push().setValue(obj);
         Toast.makeText(AddEventActivity.this, "Event Added", Toast.LENGTH_SHORT).show();
         Back();

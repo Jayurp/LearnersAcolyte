@@ -3,13 +3,19 @@ package com.example.learnersacolyte;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,7 +26,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Calender extends AppCompatActivity {
 
@@ -30,6 +39,9 @@ public class Calender extends AppCompatActivity {
     DbHelper db = new DbHelper(Calender.this);
     AlertDialog.Builder DialogBuilder;
     AlertDialog dialog;
+    ShowEventRecyclerAdapter adapter;
+    List<EventDataStructure> EventTITLE = new ArrayList<>();
+    TextView check;
 
     @Override
     public void onBackPressed() {
@@ -42,12 +54,18 @@ public class Calender extends AppCompatActivity {
         setContentView(R.layout.activity_calender);
         listbtn =  findViewById(R.id.list);
 
-        getSupportActionBar().setTitle("Calender");
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        check = findViewById(R.id.check);
 
         mcalender = findViewById(R.id.CalenderV);
 
         AddEvent = findViewById(R.id.addevent);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        String date = dateFormat.format(new Date(mcalender.getDate()));
+        yearCa = date.substring(0,4);
+        monthCa = date.substring(5,7);
+        dayCa = date.substring(8,10);
+        check.setText(yearCa+"/"+monthCa+"/"+dayCa);
 
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,23 +74,27 @@ public class Calender extends AppCompatActivity {
             }
         });
 
+        listbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoSHowEvents();
+            }
+        });
+
         mcalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 dayCa = Integer.toString(dayOfMonth);
-                monthCa = Integer.toString(month+1);
+                String finale_month = Integer.toString(month+1);
+                monthCa = finale_month;
                 yearCa = Integer.toString(year);
+                EventDataStructure obj = new EventDataStructure();
+                EventTITLE = db.ReadTitle(yearCa, monthCa, dayCa);
+                check.setText(yearCa+"/"+monthCa+"/"+dayCa);
             }
         });
 
         fetchdata();
-
-        listbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showpopup();
-            }
-        });
     }
 
     public void GotoEvent()
@@ -93,12 +115,13 @@ public class Calender extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child(GoogleID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    db.deleteDuplicateRows();
                     if(snapshot.exists())
                     {
                         for (DataSnapshot snapshot1:snapshot.getChildren())
                         {
                             FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
-                            db.insertFireBaseDataInSQ(f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getAMorPM(), f1.getEvent());
+                            db.insertFireBaseDataInSQ(f1.getTitle(), f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getAMorPM(), f1.getEvent());
                         }
                     }
                 }
@@ -121,13 +144,19 @@ public class Calender extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showpopup()
+    public void gotoSHowEvents()
     {
-        DialogBuilder =  new AlertDialog.Builder(Calender.this);
-        final View contactPopupView = getLayoutInflater().inflate(R.layout.show_events, null);
+        Intent intent = new Intent(Calender.this, events_list.class);
+        intent.putExtra("day_value", dayCa);
+        intent.putExtra("month_value", monthCa);
+        intent.putExtra("year_value", yearCa);
+        startActivity(intent);
+    }
 
-        DialogBuilder.setView(contactPopupView);
-        dialog = DialogBuilder.create();
-        dialog.show();
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
     }
 }

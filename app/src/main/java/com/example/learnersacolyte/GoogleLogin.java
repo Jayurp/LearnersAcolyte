@@ -20,13 +20,14 @@ public class GoogleLogin extends AppCompatActivity {
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 100;
+    DbHelper dbHelper = new DbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
 
-        getSupportActionBar().hide();
+
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
@@ -58,6 +59,7 @@ public class GoogleLogin extends AppCompatActivity {
     }
 
     private void signIn() {
+        dbHelper.CreateTable();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }

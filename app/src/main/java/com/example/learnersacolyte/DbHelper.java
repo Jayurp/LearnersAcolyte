@@ -2,11 +2,16 @@ package com.example.learnersacolyte;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbHelper extends SQLiteOpenHelper
 {
@@ -21,7 +26,7 @@ public class DbHelper extends SQLiteOpenHelper
     public String col_dept = "dept";
     public String col_institute = "institute"; */
 
-    public String ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event";
+    public String ColTitle = "Title", ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event";
     public String table_name = "User_DB";
 
     public DbHelper(Context context)
@@ -61,13 +66,14 @@ public class DbHelper extends SQLiteOpenHelper
     }
         */
 
-    public void insertFireBaseDataInSQ(String date, String month, String year, String minute, String hour, String ampm, String event)
+    public void insertFireBaseDataInSQ(String title, String date, String month, String year, String minute, String hour, String ampm, String event)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteDatabase db2 =  this.getReadableDatabase();
-        String create_table = "create table if not exists "+table_name+"("+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
+        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
         db.execSQL(create_table);
         ContentValues cValues = new ContentValues();
+        cValues.put(ColTitle, title);
         cValues.put(ColDate, date);
         cValues.put(ColMonth, month);
         cValues.put(ColYear, year);
@@ -79,9 +85,77 @@ public class DbHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    public void CreateTable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
+        db.execSQL(create_table);
+    }
+
     public void DeleteTable()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        db.execSQL("drop table "+table_name+";");
+        db.execSQL("drop table if exists "+table_name+";");
+    }
+
+    public List<EventDataStructure> ReadTitle(String year, String month, String date)
+    {
+        List<EventDataStructure> title = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String s = "select Title from User_DB";
+        String query = "select Title from User_DB where Year = \""+year+"\" and Month = \""+month+"\" and Date = \""+date+"\";";
+        Cursor cursor = db.rawQuery(query, null);
+        while(cursor.moveToNext())
+        {
+            EventDataStructure obj = new EventDataStructure();
+            obj.setTitle(cursor.getString(0));
+            title.add(obj);
+        }
+        return title;
+    }
+
+    public String[] gettitle(String year, String month, String date)
+    {
+            String title[] = new String[100];
+            String s = "select Title from User_DB;";
+            String query = "select Title from User_DB where Year = \""+year+"\" and Month = \""+month+"\" and Date = \""+date+"\" order by Title;";
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.rawQuery(query,null);
+            int a = 0;
+            while(cursor.moveToNext() && a < title.length)
+            {
+
+                title[a] = cursor.getString(0);
+                a++;
+            }
+            return Arrays.copyOf(title, a);
+    }
+
+    public String[] getTime(String year, String month, String date)
+    {
+        String query = "select Hour,Minute,AmorPM from User_DB where Year = \""+year+"\" and Month = \""+month+"\" and Date = \""+date+"\" order by Title;";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        String hour[] = new String[100];
+        String minute[] = new String[100];
+        String amorpm[] = new String[100];
+        String time[] = new String[100];
+        int a = 0;
+
+        while (cursor.moveToNext())
+        {
+            hour[a] = cursor.getString(0);
+            minute[a] = cursor.getString(1);
+            amorpm[a] = cursor.getString(2);
+            time[a] = hour[a]+":"+minute[a]+" "+amorpm[a];
+            a++;
+        }
+        return time;
+    }
+
+    public void deleteDuplicateRows()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM User_DB;");
     }
 }

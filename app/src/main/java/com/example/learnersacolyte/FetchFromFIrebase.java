@@ -2,7 +2,7 @@ package com.example.learnersacolyte;
 
 public class FetchFromFIrebase {
 
-    String Hour, Minute, AMorPM, Day, Month, Year, Event;
+    String Title, Hour, Minute, AMorPM, Day, Month, Year, Event;
 
     FetchFromFIrebase(){}
 
@@ -15,6 +15,10 @@ public class FetchFromFIrebase {
         this.Month = Month;
         this.Year = Year;
         this.Event = Event;
+    }
+
+    public FetchFromFIrebase(String title) {
+        Title = title;
     }
 
     public String getHour() {
@@ -71,5 +75,13 @@ public class FetchFromFIrebase {
 
     public void setEvent(String event) {
         Event = event;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
     }
 }

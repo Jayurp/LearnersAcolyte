@@ -6,19 +6,75 @@
         <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/for_details.xml" value="0.2703125" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/for_details_button.xml" value="0.1" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/for_spinners.xml" value="0.1" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.1" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/ic_check_black_24dp.xml" value="0.1" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/ic_delete_black_24dp.xml" value="0.1" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/ic_edit_black_24dp.xml" value="0.1" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/multilineedittext.xml" value="0.1" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/drawable/spinner_text.xml" value="0.1" />
-        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_add_event.xml" value="0.22146739130434784" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/font/aladin.xml" value="0.1" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_add_note.xml" value="0.17255434782608695" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_calender.xml" value="0.176" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_custom_list_view.xml" value="0.17255434782608695" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_detail.xml" value="0.17255434782608695" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_edit.xml" value="0.17255434782608695" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_enotes.xml" value="0.176" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_events_list.xml" value="0.17255434782608695" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_google_login.xml" value="0.2128623188405797" />
-        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_home_page.xml" value="0.2" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_home_page.xml" value="0.4" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_splash_screen.xml" value="0.16799999999999998" />
-        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/show_events.xml" value="0.17391304347826086" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/activity_typed_notes_main.xml" value="0.17255434782608695" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/content_detail.xml" value="0.17255434782608695" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/custom_list_view.xml" value="0.1109375" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/event_recycler_populer.xml" value="0.17255434782608695" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/layout/show_events.xml" value="0.264" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/menu/edit_menu.xml" value="0.25" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/menu/main_menu.xml" value="0.25" />
+        <entry key="..\:/LearnersAcolyte/app/src/main/res/menu/save_menu.xml" value="0.25" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/LearnersAcolyte/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
+    </option>
+  </component>
+  <component name="NullableNotNullManager">
+    <option name="myDefaultNullable" value="androidx.annotation.Nullable" />
+    <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
+    <option name="myNullables">
+      <value>
+        <list size="12">
+          <item index="0" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
+          <item index="1" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
+          <item index="2" class="java.lang.String" itemvalue="androidx.annotation.Nullable" />
+          <item index="3" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+          <item index="4" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
+          <item index="5" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
+          <item index="6" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNullable" />
+          <item index="7" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
+          <item index="8" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
+          <item index="9" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
+          <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.Nullable" />
+          <item index="11" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
+        </list>
+      </value>
+    </option>
+    <option name="myNotNulls">
+      <value>
+        <list size="11">
+          <item index="0" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNonNull" />
+          <item index="1" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.NonNull" />
+          <item index="2" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
+          <item index="3" class="java.lang.String" itemvalue="androidx.annotation.NonNull" />
+          <item index="4" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
+          <item index="5" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
+          <item index="6" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
+          <item index="7" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
+          <item index="8" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
+          <item index="9" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
+          <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
+        </list>
+      </value>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">

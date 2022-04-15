@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -16,13 +17,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomePage extends AppCompatActivity {
 
     ImageButton enotes;
-    ImageButton calender;
+    ImageButton calender, typed_notes;
     GoogleSignInClient mGoogleSignInClient;
     DbHelper db = new DbHelper(HomePage.this);
+    TextView LogOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,22 @@ public class HomePage extends AppCompatActivity {
 
         enotes = findViewById(R.id.enotes);
         calender = findViewById(R.id.scheduler);
+        typed_notes = findViewById(R.id.typed_notes);
+        LogOut = findViewById(R.id.LogOut);
+
+        LogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
+        typed_notes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTypedNotes();
+            }
+        });
 
         enotes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +118,12 @@ public class HomePage extends AppCompatActivity {
     private void GotoLogin()
     {
         Intent intent = new Intent(HomePage.this, GoogleLogin.class);
+        startActivity(intent);
+    }
+
+    public void openTypedNotes()
+    {
+        Intent intent = new Intent(HomePage.this, typed_notes_main.class);
         startActivity(intent);
     }
 }
