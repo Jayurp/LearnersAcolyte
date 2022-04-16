@@ -1,6 +1,7 @@
 package com.example.learnersacolyte;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowEventRecyclerAdapter extends RecyclerView.Adapter<ShowEventRecyclerAdapter.ViewHolder> {
@@ -18,11 +18,13 @@ public class ShowEventRecyclerAdapter extends RecyclerView.Adapter<ShowEventRecy
     List<EventDataStructure> list;
     String s[] = new String[100];
     String time[] = new String[100];
+    String id[] = new String[100];
 
-    public ShowEventRecyclerAdapter(Context context, String[] s, String[] time) {
+    public ShowEventRecyclerAdapter(Context context, String[] s, String[] time, String[] id) {
         this.context = context;
         this.s = s;
         this.time = time;
+        this.id = id;
     }
 
     @NonNull
@@ -62,6 +64,9 @@ public class ShowEventRecyclerAdapter extends RecyclerView.Adapter<ShowEventRecy
         @Override
         public void onClick(View v) {
 
+            Intent intent = new Intent(v.getContext(), ShowFullEvent.class);
+            intent.putExtra("ID", id[getAdapterPosition()]);
+            v.getContext().startActivity(intent);
         }
     }
 }

@@ -84,8 +84,22 @@ public class Calender extends AppCompatActivity {
         mcalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                dayCa = Integer.toString(dayOfMonth);
-                String finale_month = Integer.toString(month+1);
+                String zero = Integer.toString(0);
+
+                if(dayOfMonth < 10)
+                {
+                    dayCa = zero + Integer.toString(dayOfMonth);
+                }
+                else dayCa = Integer.toString(dayOfMonth);
+
+                String finale_month;
+                if(month+1 < 10)
+                {
+                    String m = Integer.toString(month+1);
+                    finale_month = zero + m;
+                }
+                else
+                    finale_month = Integer.toString(month+1);
                 monthCa = finale_month;
                 yearCa = Integer.toString(year);
                 EventDataStructure obj = new EventDataStructure();
@@ -121,7 +135,7 @@ public class Calender extends AppCompatActivity {
                         for (DataSnapshot snapshot1:snapshot.getChildren())
                         {
                             FetchFromFIrebase f1 = snapshot1.getValue(FetchFromFIrebase.class);
-                            db.insertFireBaseDataInSQ(f1.getTitle(), f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getAMorPM(), f1.getEvent());
+                            db.insertFireBaseDataInSQ(f1.getTitle(), f1.getDay(), f1.getMonth(), f1.getYear(), f1.getMinute(), f1.getHour(), f1.getAMorPM(), f1.getEvent(), f1.getID());
                         }
                     }
                 }

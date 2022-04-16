@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnersAcolyte">
         <activity
+            android:name=".EditEvent"
+            android:exported="false" />
+        <activity
+            android:name=".ShowFullEvent"
+            android:exported="false" />
+        <activity
             android:name=".events_list"
             android:exported="false" />
         <activity

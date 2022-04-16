@@ -26,7 +26,7 @@ public class DbHelper extends SQLiteOpenHelper
     public String col_dept = "dept";
     public String col_institute = "institute"; */
 
-    public String ColTitle = "Title", ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event";
+    public String ColTitle = "Title", ColHour = "Hour", ColMin = "Minute", AmPm = "AMorPM", ColDate = "Date", ColMonth = "Month", ColYear = "Year", ColEvent = "Event", ColID = "ID";
     public String table_name = "User_DB";
 
     public DbHelper(Context context)
@@ -66,11 +66,11 @@ public class DbHelper extends SQLiteOpenHelper
     }
         */
 
-    public void insertFireBaseDataInSQ(String title, String date, String month, String year, String minute, String hour, String ampm, String event)
+    public void insertFireBaseDataInSQ(String title, String date, String month, String year, String minute, String hour, String ampm, String event, String ID)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         SQLiteDatabase db2 =  this.getReadableDatabase();
-        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
+        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string,"+ColID+" string);";
         db.execSQL(create_table);
         ContentValues cValues = new ContentValues();
         cValues.put(ColTitle, title);
@@ -81,6 +81,7 @@ public class DbHelper extends SQLiteOpenHelper
         cValues.put(ColHour, hour);
         cValues.put(AmPm, ampm);
         cValues.put(ColEvent, event);
+        cValues.put(ColID, ID);
         long newRowId = db.insert(table_name,null, cValues);
         db.close();
     }
@@ -88,7 +89,7 @@ public class DbHelper extends SQLiteOpenHelper
     public void CreateTable()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string);";
+        String create_table = "create table if not exists "+table_name+"("+ColTitle+" string,"+ColDate+" string,"+ColMonth+" string,"+ColYear+" string,"+ColHour+" string,"+ColMin+" string,"+AmPm+" string,"+ColEvent+" string,"+ColID+" string);";
         db.execSQL(create_table);
     }
 
@@ -153,9 +154,33 @@ public class DbHelper extends SQLiteOpenHelper
         return time;
     }
 
+    public String[] getID(String year, String month, String date)
+    {
+        String query = "select ID from User_DB where Year = \""+year+"\" and Month = \""+month+"\" and Date = \""+date+"\" order by Title;";
+        String ID[] = new String[100];
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int a = 0;
+        while(cursor.moveToNext() && a < ID.length)
+        {
+            ID[a] = cursor.getString(0);
+            a++;
+        }
+
+        return Arrays.copyOf(ID, a);
+    }
+
     public void deleteDuplicateRows()
     {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM User_DB;");
+    }
+
+    public Cursor FetchFullEvent(String id)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "select * from User_DB where ID = \""+id+"\";";
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
     }
 }

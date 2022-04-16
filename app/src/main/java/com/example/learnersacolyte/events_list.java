@@ -34,8 +34,9 @@ public class events_list extends AppCompatActivity {
 
         String[] titles = db.gettitle(year, month, day);
         String[] time = db.getTime(year, month, day);
+        String[] id = db.getID(year, month, day);
 
-        adapter =  new ShowEventRecyclerAdapter(events_list.this, titles, time);
+        adapter =  new ShowEventRecyclerAdapter(events_list.this, titles, time, id);
 
         rc = findViewById(R.id.recycler);
         rc.setHasFixedSize(true);

@@ -1,25 +1,18 @@
 package com.example.learnersacolyte;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -29,7 +22,7 @@ public class AddEventActivity extends AppCompatActivity {
     //DbHelper db = new DbHelper(AddEventActivity.this);
     NumberPicker HourPicker, MinPicker, AmPm;
     String[] AP,minute;
-    String showhour = "1", showmin = "0", amorpm = "am", day, monthC, yearC;
+    String showhour = "01", showmin = "00", amorpm = "am", day, monthC, yearC, zero = Integer.toString(0);
     Button submit_btn, cancel_btn;
     EditText description, title;
     String GoogleIDforDB;
@@ -40,7 +33,6 @@ public class AddEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_event);
 
 
-
         Intent intent = getIntent();
         GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
         GoogleIDforDB = acc.getId();
@@ -48,15 +40,15 @@ public class AddEventActivity extends AppCompatActivity {
         monthC = intent.getStringExtra("month_value");
         yearC = intent.getStringExtra("year_value");
 
-        HourPicker = findViewById(R.id.HourPIcker);
-        MinPicker = findViewById(R.id.MinPicker);
-        AmPm = findViewById(R.id.AmPm);
+        HourPicker = findViewById(R.id.hour_for_add);
+        MinPicker = findViewById(R.id.min_for_add);
+        AmPm = findViewById(R.id.format_for_add);
         AP = getResources().getStringArray(R.array.AP);
         minute = getResources().getStringArray(R.array.minute);
-        submit_btn = findViewById(R.id.submit_btn);
-        cancel_btn = findViewById(R.id.cancel_btn);
-        description = findViewById(R.id.EventDes);
-        title = findViewById(R.id.Title);
+        submit_btn = findViewById(R.id.submit_for_add);
+        cancel_btn = findViewById(R.id.cancel_for_add);
+        description = findViewById(R.id.des_for_add);
+        title = findViewById(R.id.title_for_add);
 
         HourPicker.setMaxValue(12);
         HourPicker.setMinValue(1);
@@ -70,14 +62,24 @@ public class AddEventActivity extends AppCompatActivity {
         HourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                showhour = Integer.toString(newVal);
+                if(newVal < 10)
+                {
+                    showhour = zero + Integer.toString(newVal);
+                }
+                else
+                    showhour = Integer.toString(newVal);
             }
         });
 
         MinPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                showmin = Integer.toString(newVal);
+                if(newVal < 10)
+                {
+                    showmin = zero + Integer.toString(newVal);
+                }
+                else
+                    showmin = Integer.toString(newVal);
             }
         });
 
@@ -88,7 +90,6 @@ public class AddEventActivity extends AppCompatActivity {
                     amorpm = "am";
                 else
                     amorpm = "pm";
-
             }
         });
 
@@ -113,6 +114,7 @@ public class AddEventActivity extends AppCompatActivity {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(AddEventActivity.this);
         String GoogleID = acct.getId();
         HashMap<String, Object> obj = new HashMap<String, Object>();
+        String id = yearC + monthC + day + showhour + showmin + amorpm;
         obj.put("Hour", showhour);
         obj.put("Minute", showmin);
         obj.put("AMorPM", amorpm);
@@ -121,7 +123,8 @@ public class AddEventActivity extends AppCompatActivity {
         obj.put("Year", yearC);
         obj.put("Event", description.getText().toString());
         obj.put("Title", title.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child(GoogleID).push().setValue(obj);
+        obj.put("ID",id);
+        FirebaseDatabase.getInstance().getReference().child(GoogleID).child(id).setValue(obj);
         Toast.makeText(AddEventActivity.this, "Event Added", Toast.LENGTH_SHORT).show();
         Back();
     }
