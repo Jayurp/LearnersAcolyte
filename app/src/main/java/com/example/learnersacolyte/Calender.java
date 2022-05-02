@@ -1,5 +1,6 @@
 package com.example.learnersacolyte;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +45,7 @@ public class Calender extends AppCompatActivity {
     ShowEventRecyclerAdapter adapter;
     List<EventDataStructure> EventTITLE = new ArrayList<>();
     TextView check;
+    String hourForAlarm , minForAlarm;
 
     @Override
     public void onBackPressed() {
@@ -109,6 +113,70 @@ public class Calender extends AppCompatActivity {
         });
 
         fetchdata();
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+        String todayDate = currentDate.format(new Date());
+        String todayDay = todayDate.substring(8,10);
+        if(Integer.parseInt(todayDay) < 10)
+            todayDay = todayDate.substring(9,10);
+        String todayMonth = todayDate.substring(5,7);
+        if(Integer.parseInt(todayMonth) < 10)
+            todayMonth = todayDate.substring(6,7);
+        String todayYear = todayDate.substring(0,4);
+
+        Cursor events_for_notification = db.fetchByDate(todayDay, todayMonth, todayYear);
+
+        if(events_for_notification != null)
+        {
+            int count = events_for_notification.getColumnCount();
+            for(int i = 0; i < count; i++)
+            {
+                while(events_for_notification.moveToNext())
+                {
+                    String format_to_convert = events_for_notification.getString(6);
+
+                    if(format_to_convert.equals("am") && Integer.parseInt(events_for_notification.getString(4)) == 12)
+                    {
+                        hourForAlarm = "00";
+                        if(events_for_notification.getString(5).length() == 1)
+                            minForAlarm = "0" + events_for_notification.getString(5);
+                        else
+                            minForAlarm = events_for_notification.getString(5);
+                    }
+
+                    else if(format_to_convert.equals("pm") && Integer.parseInt(events_for_notification.getString(4)) == 12)
+                    {
+                        hourForAlarm = "12";
+                        if(events_for_notification.getString(5).length() == 1)
+                            minForAlarm = "0" + events_for_notification.getString(5);
+                        else
+                            minForAlarm = events_for_notification.getString(5);
+                    }
+
+                    else if (format_to_convert.equals("pm"))
+                    {
+                        int a = Integer.parseInt(events_for_notification.getString(4)) + 12;
+                        hourForAlarm = Integer.toString(a);
+                        if(events_for_notification.getString(5).length() == 1)
+                            minForAlarm = "0" + events_for_notification.getString(5);
+                        else
+                            minForAlarm = events_for_notification.getString(5);
+                    }
+
+                    else if(format_to_convert.equals("am"))
+                    {
+                        if(events_for_notification.getString(4).length() == 1)
+                            hourForAlarm = "0" + events_for_notification.getString(4);
+                        else
+                            hourForAlarm = events_for_notification.getString(4);
+                        if(events_for_notification.getString(5).length() == 1)
+                            minForAlarm = "0" + events_for_notification.getString(5);
+                        else
+                            minForAlarm = events_for_notification.getString(5);
+                    }
+                }
+            }
+        }
     }
 
     public void GotoEvent()

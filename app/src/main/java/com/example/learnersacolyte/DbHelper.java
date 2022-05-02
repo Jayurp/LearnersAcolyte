@@ -183,4 +183,12 @@ public class DbHelper extends SQLiteOpenHelper
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
+
+    public Cursor fetchByDate(String date, String month, String year)
+    {
+        String query = "select * from User_DB where Date = \""+date+"\" and Month = \""+month+"\" and Year = \""+year+"\" order by Title;";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 }
