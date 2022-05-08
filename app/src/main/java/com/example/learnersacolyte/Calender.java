@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -28,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +50,7 @@ public class Calender extends AppCompatActivity {
     List<EventDataStructure> EventTITLE = new ArrayList<>();
     TextView check;
     String hourForAlarm , minForAlarm;
+    String todayDay, todayMonth, todayYear;
 
     @Override
     public void onBackPressed() {
@@ -116,20 +121,20 @@ public class Calender extends AppCompatActivity {
 
         SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
         String todayDate = currentDate.format(new Date());
-        String todayDay = todayDate.substring(8,10);
+        todayDay = todayDate.substring(8,10);
         if(Integer.parseInt(todayDay) < 10)
             todayDay = todayDate.substring(9,10);
-        String todayMonth = todayDate.substring(5,7);
+        todayMonth = todayDate.substring(5,7);
         if(Integer.parseInt(todayMonth) < 10)
             todayMonth = todayDate.substring(6,7);
-        String todayYear = todayDate.substring(0,4);
+        todayYear = todayDate.substring(0,4);
 
         Cursor events_for_notification = db.fetchByDate(todayDay, todayMonth, todayYear);
 
         if(events_for_notification != null)
         {
             int count = events_for_notification.getColumnCount();
-            for(int i = 0; i < count; i++)
+            for(int i = 0; i < 1; i++)
             {
                 while(events_for_notification.moveToNext())
                 {
@@ -174,6 +179,19 @@ public class Calender extends AppCompatActivity {
                         else
                             minForAlarm = events_for_notification.getString(5);
                     }
+
+                    String finalTime = hourForAlarm+":"+minForAlarm;
+                    DateFormat format = new SimpleDateFormat("hh:mm");
+                    Date date1 = new Date();
+                    try {
+                        date1 = format.parse(finalTime);
+                    }catch (ParseException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    String titleForAlarm = events_for_notification.getString(0);
+                    String bodyForAlarm = events_for_notification.getString(7);
+                    createAlarm(date1, titleForAlarm, bodyForAlarm);
                 }
             }
         }
@@ -233,6 +251,24 @@ public class Calender extends AppCompatActivity {
         intent.putExtra("month_value", monthCa);
         intent.putExtra("year_value", yearCa);
         startActivity(intent);
+    }
+
+    public void createAlarm(Date alarmTime, String Title, String Body)
+    {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(Calender.this, AlarmBroadcast.class);
+        intent.putExtra("Title", Title);
+        intent.putExtra("Body", Body);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        try {
+            am.set(AlarmManager.RTC_WAKEUP, alarmTime.getTime(), pendingIntent);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
